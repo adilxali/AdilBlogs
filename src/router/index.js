@@ -12,31 +12,49 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: HomeView,
+      meta: {
+        guest: false,
+      },
     },
     {
       path: "/add-post",
       name: "add-post",
       component: AddPostView,
+      meta: {
+        guest: false,
+      },
     },
     {
       path: "/posts",
       name: "posts",
       component: PostsView,
+      meta: {
+        guest: false,
+      },
     },
     {
       path: "/post/:slug",
       name: "post",
       component: PostView,
+      meta: {
+        guest: false,
+      },
     },
     {
       path: "/edit-post/:slug",
       name: "edit-post",
       component: AddPostView,
+      meta: {
+        guest: false,
+      },
     },
     {
       path: "/register",
       name: "register",
       component: RegisterView,
+      meta: {
+        guest: true,
+      },
     },
     {
       path: "/login",
@@ -45,13 +63,22 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import("../views/LoginView.vue"),
+      meta: {
+        guest: true,
+      },
     },
   ],
 });
 router.beforeEach((to, from, next) => {
   const isAuthenticated = localStorage.getItem("user");
-  if (to.name !== "login" && !isAuthenticated) next({ name: "login" });
-  else next();
+  if (to.meta.guest && isAuthenticated) {
+    next({ name: "home" });
+  } else if (!to.meta.guest && !isAuthenticated) {
+    next({ name: "login" });
+  } else {
+    next();
+  }
 });
+
 
 export default router;
