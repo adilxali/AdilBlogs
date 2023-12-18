@@ -16,9 +16,10 @@ onMounted(() => {
 
 <template>
   <main class="flex flex-col justify-center">
-    <PostCard v-if="posts" :posts="posts" />
+    <PostCard v-if="posts.value" :posts="posts" />
     <div v-else>
-      <p>Loading...</p>
+      <h1 class=" font-bold text-3xl italic ">No Post Available</h1>
+      <router-link to="/add-post"><p class="text-center underline italic">Please Add Post to View</p></router-link>
     </div>
   </main>
 </template>
