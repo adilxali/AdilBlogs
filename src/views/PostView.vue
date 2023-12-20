@@ -30,9 +30,8 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div v-if="loading" class="flex justify-center items-center h-screen">
-    <Loader />
-  </div>
+  <Loader v-if="loading" />
+  
   <div
     v-if="post"
     class="mx-auto flex flex-col items-center gap-3 text-gray-800 border border-gray-700 rounded-lg max-w-7xl max-h-screen w-90 h-[75vh]"

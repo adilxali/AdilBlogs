@@ -4,7 +4,7 @@ const { getFilePreview } = useFileStore();
 defineProps(["posts"]);
 </script>
 <template>
-  <div class="flex flex-col justify-center gap-3 overflow-auto">
+  <div v-if="posts.length" class="flex flex-col justify-center gap-3 overflow-auto">
     <router-link
       v-for="post in posts"
       :key="post.$id"
@@ -23,5 +23,9 @@ defineProps(["posts"]);
         <p class="mb-3 font-normal text-gray-400">{{ post.content }}</p>
       </div>
     </router-link>
+  </div>
+  <div v-else>
+    <h1 class="font-bold text-3xl italic ">No Post Available</h1>
+    <router-link to="/add-post"><p class="text-center underline italic">Please Add Post to View</p></router-link>
   </div>
 </template>

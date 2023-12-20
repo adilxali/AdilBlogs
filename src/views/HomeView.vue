@@ -1,25 +1,26 @@
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useBlogStore } from "../stores/blogStore";
 import PostCard from "../components/PostCard.vue";
+import Loader from "../components/Loader.vue";
 
 const postsStore = useBlogStore();
 
-const { posts } = storeToRefs(postsStore);
+const { posts, loading } = storeToRefs(postsStore);
 const { init } = postsStore;
 
 onMounted(() => {
+
   init();
 });
 </script>
 
 <template>
   <main class="flex flex-col justify-center">
-    <PostCard v-if="posts.value" :posts="posts" />
-    <div v-else>
-      <h1 class="font-bold text-3xl italic ">No Post Available</h1>
-      <router-link to="/add-post"><p class="text-center underline italic">Please Add Post to View</p></router-link>
-    </div>
+    <Loader v-if="loading" />
+    
+    <PostCard v-if="posts && !loading" :posts="posts" />
+   
   </main>
 </template>
